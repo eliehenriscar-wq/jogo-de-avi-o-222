@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <title>Jogo de Avião</title>
   <style>
+    body { margin:0; }
     canvas {
       background: url('pista.png') no-repeat center;
       background-size: cover;
@@ -20,48 +21,48 @@
     const ctx = canvas.getContext("2d");
 
     // Avião
-    let planeImg = new Image();
-    planeImg.src = "plane.png"; // coloque aqui uma imagem com asas
-    let plane = { x: canvas.width/2, y: canvas.height-100, width: 50, height: 50 };
+    const planeImg = new Image();
+    planeImg.src = "plane.png"; // precisa ter asas e estar orientado para frente
+    const plane = { x: canvas.width/2-25, y: canvas.height-120, width: 50, height: 50 };
 
-    // Balas e inimigos
+    // Balas, inimigos e pontuação
     let bullets = [];
     let enemies = [];
     let score = 0;
 
     // Controles
     document.addEventListener("keydown", (e) => {
-      if(e.key === "ArrowUp") plane.y -= 10;
-      if(e.key === "ArrowDown") plane.y += 10;
-      if(e.key === "ArrowLeft") plane.x -= 10;
-      if(e.key === "ArrowRight") plane.x += 10;
+      if(e.key === "ArrowUp") plane.y -= 15;
+      if(e.key === "ArrowDown") plane.y += 15;
+      if(e.key === "ArrowLeft") plane.x -= 15;
+      if(e.key === "ArrowRight") plane.x += 15;
       if(e.code === "Space") {
-        bullets.push({x: plane.x+20, y: plane.y});
+        bullets.push({x: plane.x+plane.width/2-2, y: plane.y});
       }
     });
 
     // Criar inimigos
     function spawnEnemy() {
-      enemies.push({x: Math.random()*canvas.width, y: 0, width: 40, height: 40});
+      enemies.push({x: Math.random()*(canvas.width-40), y: 0, width: 40, height: 40});
     }
     setInterval(spawnEnemy, 2000);
 
-    // Atualizar jogo
+    // Loop principal
     function update() {
       ctx.clearRect(0,0,canvas.width,canvas.height);
       ctx.drawImage(planeImg, plane.x, plane.y, plane.width, plane.height);
 
       // Balas
       bullets.forEach((b, i) => {
-        b.y -= 5;
+        b.y -= 8;
         ctx.fillStyle = "red";
-        ctx.fillRect(b.x, b.y, 5, 10);
+        ctx.fillRect(b.x, b.y, 4, 10);
         if(b.y < 0) bullets.splice(i,1);
       });
 
       // Inimigos
       enemies.forEach((en, i) => {
-        en.y += 2;
+        en.y += 3;
         ctx.fillStyle = "black";
         ctx.fillRect(en.x, en.y, en.width, en.height);
 
@@ -77,7 +78,7 @@
         // Colisão com balas
         bullets.forEach((b, j) => {
           if(b.x < en.x+en.width &&
-             b.x+5 > en.x &&
+             b.x+4 > en.x &&
              b.y < en.y+en.height &&
              b.y+10 > en.y) {
                enemies.splice(i,1);
