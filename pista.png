@@ -1,0 +1,10 @@
+function drawRunway() {
+  ctx.fillStyle = "gray";
+  ctx.fillRect(0, canvas.height-200, canvas.width, 200);
+
+  // linha central
+  ctx.fillStyle = "white";
+  for(let i=0; i<canvas.width; i+=40) {
+    ctx.fillRect(i, canvas.height-100, 20, 5);
+  }
+}
