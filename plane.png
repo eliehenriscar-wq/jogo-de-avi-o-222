@@ -1,0 +1,17 @@
+function drawPlane(x, y) {
+  // corpo
+  ctx.fillStyle = "white";
+  ctx.fillRect(x, y, 50, 80);
+
+  // asas
+  ctx.fillStyle = "red";
+  ctx.fillRect(x-30, y+20, 30, 10); // asa esquerda
+  ctx.fillRect(x+50, y+20, 30, 10); // asa direita
+
+  // cauda
+  ctx.fillRect(x+20, y+70, 10, 20);
+
+  // cockpit
+  ctx.fillStyle = "blue";
+  ctx.fillRect(x+15, y+5, 20, 20);
+}
